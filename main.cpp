@@ -37,13 +37,11 @@ public:
     }
 
     void deallocate(T* p, std::size_t n) {
-        if (p != nullptr) {
-            for (size_t i = 0; i < n; ++i) {
-                p[i].~T(); // Вызываем деструктор для каждого элемента
-            }
-            currentIndex -= n; // Уменьшаем текущий индекс на количество освобожденных элементов
-        }
+    if (p != nullptr) {
+        ::operator delete(p); // Освобождаем память
     }
+}
+
 
 private:
     size_t blockSize; // Размер блока памяти

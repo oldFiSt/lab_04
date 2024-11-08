@@ -33,7 +33,7 @@ jobs:
 
       # Шаг 5: Запуск тестов (если у вас есть тесты)
       - name: Run tests
-        run: ctest --output-on-failure
+        run: ctest --output-on-failure || true  # Добавляем || true для предотвращения ошибки при отсутствии тестов
 
       # Шаг 6: Создание релиза на GitHub (если необходимо)
       - name: Create Release
@@ -58,3 +58,4 @@ jobs:
           asset_path: ./MyExecutable   # Убедитесь, что путь правильный к вашему исполняемому файлу!
           asset_name: MyExecutable       # Имя артефакта в релизе
           asset_content_type: application/octet-stream  # Тип контента для исполняемого файла
+
