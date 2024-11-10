@@ -1,4 +1,4 @@
-name: 'C++ CI on macOS'
+name: 'C++ CI'
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest  # Используем macOS для выполнения работы
+    runs-on: ubuntu-latest
     permissions:
       contents: write  # Необходимое разрешение для создания релиза
 
@@ -21,7 +21,7 @@ jobs:
 
       # Шаг 2: Установка зависимостей (например, Boost)
       - name: Install dependencies
-        run: brew install cmake boost  # Установка CMake и Boost через Homebrew
+        run: sudo apt-get update && sudo apt-get install libboost-test-dev cmake g++ -y
 
       # Шаг 3: Генерация файлов сборки с помощью CMake
       - name: Configure CMake
@@ -33,7 +33,7 @@ jobs:
 
       # Шаг 5: Запуск тестов (если у вас есть тесты)
       - name: Run tests
-        run: ctest --output-on-failure || true  # Добавляем || true для предотвращения ошибки при отсутствии тестов
+        run: ctest --output-on-failure
 
       # Шаг 6: Создание релиза на GitHub (если необходимо)
       - name: Create Release
@@ -58,4 +58,3 @@ jobs:
           asset_path: ./MyExecutable   # Убедитесь, что путь правильный к вашему исполняемому файлу!
           asset_name: MyExecutable       # Имя артефакта в релизе
           asset_content_type: application/octet-stream  # Тип контента для исполняемого файла
-
